@@ -1,0 +1,5 @@
+com\mycompany\sistemaseguridad\InventoryManager.class
+com\mycompany\sistemaseguridad\PasswordValidator.class
+com\mycompany\sistemaseguridad\SistemaSeguridad.class
+com\mycompany\sistemaseguridad\TextProcessor.class
+com\mycompany\sistemaseguridad\EmailValidator.class

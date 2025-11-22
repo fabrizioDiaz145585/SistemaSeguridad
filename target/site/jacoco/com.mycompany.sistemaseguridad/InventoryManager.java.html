@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>InventoryManager.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SistemaSeguridad</a> &gt; <a href="index.source.html" class="el_package">com.mycompany.sistemaseguridad</a> &gt; <span class="el_source">InventoryManager.java</span></div><h1>InventoryManager.java</h1><pre class="source lang-java linenums">/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package com.mycompany.sistemaseguridad;
+
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ *
+ * @author fabri
+ */
+<span class="fc" id="L14">public class InventoryManager {</span>
+    
+    // Mapa para guardar el inventario: &quot;NombreProducto&quot; -&gt; Cantidad
+<span class="fc" id="L17">    private Map&lt;String, Integer&gt; inventory = new HashMap&lt;&gt;();</span>
+
+    public void addItem(String item, int quantity) {
+        // VALIDACIÓN 1: Nombre nulo o vacío (Escenario 3)
+<span class="pc bpc" id="L21" title="1 of 4 branches missed.">        if (item == null || item.trim().isEmpty()) {</span>
+<span class="fc" id="L22">            throw new IllegalArgumentException(&quot;El nombre del producto no puede estar vacío&quot;);</span>
+        }
+
+        // VALIDACIÓN 2: Longitud del nombre (Requerimiento: 2 a 50 caracteres)
+<span class="fc bfc" id="L26" title="All 4 branches covered.">        if (item.length() &lt; 2 || item.length() &gt; 50) {</span>
+<span class="fc" id="L27">            throw new IllegalArgumentException(&quot;El nombre debe tener entre 2 y 50 caracteres&quot;);</span>
+        }
+
+        // VALIDACIÓN 3: Cantidad (Escenario 2 y Requerimiento Max 1000)
+<span class="fc bfc" id="L31" title="All 4 branches covered.">        if (quantity &lt; 1 || quantity &gt; 1000) {</span>
+<span class="fc" id="L32">            throw new IllegalArgumentException(&quot;La cantidad debe ser válida (entre 1 y 1000)&quot;);</span>
+        }
+
+        // LÓGICA PRINCIPAL: Sumar si existe, crear si no
+<span class="fc bfc" id="L36" title="All 2 branches covered.">        if (inventory.containsKey(item)) {</span>
+<span class="fc" id="L37">            int actual = inventory.get(item);</span>
+<span class="fc" id="L38">            inventory.put(item, actual + quantity);</span>
+<span class="fc" id="L39">        } else {</span>
+<span class="fc" id="L40">            inventory.put(item, quantity);</span>
+        }
+<span class="fc" id="L42">    }</span>
+
+    // Método auxiliar necesario para las pruebas (consultar el stock)
+    public int getStock(String item) {
+        // getOrDefault devuelve 0 si el producto no existe
+<span class="fc" id="L47">        return inventory.getOrDefault(item, 0);</span>
+    }
+    
+    // Método auxiliar para verificar si existe (útil para aserciones)
+    public boolean hasProduct(String item) {
+<span class="fc" id="L52">        return inventory.containsKey(item);</span>
+    }
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

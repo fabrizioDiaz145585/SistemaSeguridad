@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EmailValidator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SistemaSeguridad</a> &gt; <a href="index.source.html" class="el_package">com.mycompany.sistemaseguridad</a> &gt; <span class="el_source">EmailValidator.java</span></div><h1>EmailValidator.java</h1><pre class="source lang-java linenums">/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package com.mycompany.sistemaseguridad;
+
+/**
+ *
+ * @author fabri
+ */
+<span class="fc" id="L11">public class EmailValidator {</span>
+    
+    public boolean isValidEmail(String email) {
+        // ESCENARIO 1: Nulo o Vacío
+<span class="fc bfc" id="L15" title="All 4 branches covered.">        if (email == null || email.trim().isEmpty()) {</span>
+<span class="fc" id="L16">            throw new IllegalArgumentException(&quot;El correo no puede ser nulo o vacío&quot;);</span>
+        }
+
+        // Longitud total (RFC 5321)
+<span class="pc bpc" id="L20" title="2 of 4 branches missed.">        if (email.length() &lt; 6 || email.length() &gt; 254) {</span>
+<span class="nc" id="L21">            return false;</span>
+        }
+
+        // Debe contener un arroba '@'
+<span class="fc" id="L25">        int arrobaIndex = email.indexOf('@');</span>
+<span class="fc bfc" id="L26" title="All 2 branches covered.">        if (arrobaIndex == -1) {</span>
+<span class="fc" id="L27">            return false; // No tiene @</span>
+        }
+        
+        // Solo puede haber UN arroba
+<span class="pc bpc" id="L31" title="1 of 2 branches missed.">        if (email.indexOf('@', arrobaIndex + 1) != -1) {</span>
+<span class="nc" id="L32">            return false; // Tiene más de un @</span>
+        }
+
+        // Separar parte local y dominio
+<span class="fc" id="L36">        String localPart = email.substring(0, arrobaIndex);</span>
+<span class="fc" id="L37">        String domainPart = email.substring(arrobaIndex + 1);</span>
+
+        // VALIDACIONES PARTE LOCAL
+<span class="pc bpc" id="L40" title="1 of 2 branches missed.">        if (localPart.isEmpty()) return false;</span>
+<span class="fc bfc" id="L41" title="All 4 branches covered.">        if (localPart.startsWith(&quot;.&quot;) || localPart.endsWith(&quot;.&quot;)) return false; // No punto al inicio/fin</span>
+<span class="fc bfc" id="L42" title="All 2 branches covered.">        if (localPart.contains(&quot;..&quot;)) return false; // No puntos consecutivos</span>
+
+        // Caracteres permitidos en local (Letras, números, punto, guion, guion bajo)
+<span class="fc bfc" id="L45" title="All 2 branches covered.">        for (char c : localPart.toCharArray()) {</span>
+<span class="pc bpc" id="L46" title="3 of 8 branches missed.">            if (!Character.isLetterOrDigit(c) &amp;&amp; c != '.' &amp;&amp; c != '-' &amp;&amp; c != '_') {</span>
+<span class="fc" id="L47">                return false; // Caracter inválido</span>
+            }
+        }
+
+        // VALIDACIONES DOMINIO
+<span class="pc bpc" id="L52" title="1 of 2 branches missed.">        if (domainPart.isEmpty()) return false;</span>
+<span class="fc bfc" id="L53" title="All 2 branches covered.">        if (!domainPart.contains(&quot;.&quot;)) return false; // Debe tener punto</span>
+<span class="pc bpc" id="L54" title="1 of 2 branches missed.">        if (domainPart.contains(&quot;..&quot;)) return false; // No puntos consecutivos</span>
+        
+        // El último punto no puede estar al final ni al principio del dominio
+<span class="pc bpc" id="L57" title="1 of 4 branches missed.">        if (domainPart.startsWith(&quot;.&quot;) || domainPart.endsWith(&quot;.&quot;)) return false;</span>
+
+        // Validar extensión (parte después del último punto)
+<span class="fc" id="L60">        int lastDotIndex = domainPart.lastIndexOf('.');</span>
+<span class="fc" id="L61">        String extension = domainPart.substring(lastDotIndex + 1);</span>
+        
+        // Extensión debe tener al menos 2 caracteres (ej: .co, .com)
+<span class="fc bfc" id="L64" title="All 2 branches covered.">        if (extension.length() &lt; 2) return false;</span>
+
+<span class="fc" id="L66">        return true; // Si pasó todo, es válido</span>
+    }
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

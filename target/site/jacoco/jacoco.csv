@@ -1,0 +1,6 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+SistemaSeguridad,com.mycompany.sistemaseguridad,PasswordValidator,2,109,5,29,1,26,5,14,0,2
+SistemaSeguridad,com.mycompany.sistemaseguridad,SistemaSeguridad,7,0,0,0,3,0,2,0,2,0
+SistemaSeguridad,com.mycompany.sistemaseguridad,EmailValidator,10,141,10,32,2,24,10,13,0,2
+SistemaSeguridad,com.mycompany.sistemaseguridad,TextProcessor,3,38,0,6,1,9,1,4,1,1
+SistemaSeguridad,com.mycompany.sistemaseguridad,InventoryManager,0,87,1,13,0,16,1,10,0,4
